@@ -1,0 +1,858 @@
+
+            # 基于区块链DID身份系统的全栈门户网站 - HTML结构和布局
+
+以下是完整的HTML结构和布局代码，包含所有必要的元素、样式和响应式设计：
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DID身份门户 - 基于区块链的去中心化身份系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* 全局样式和CSS变量 */
+        :root {
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --success: #28a745;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+            --border-radius: 12px;
+            --container-padding: 2rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(78, 84, 200, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(78, 84, 200, 0.05);
+        }
+
+        .btn-small {
+            padding: 0.5rem 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        /* 顶部导航栏 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            margin-right: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(135deg, rgba(78, 84, 200, 0.9), rgba(143, 148, 251, 0.9)), 
+                        url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 10rem 0 6rem;
+            margin-top: 70px;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-icon {
+            flex: 0 0 auto;
+            font-size: 12rem;
+            opacity: 0.8;
+            color: white;
+        }
+
+        /* 应用展示区域 */
+        .apps-section {
+            background-color: white;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .app-category {
+            margin-bottom: 5rem;
+        }
+
+        .app-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .category-description {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        .app-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .app-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .app-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+
+        .app-description {
+            color: var(--gray);
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .app-tag {
+            display: inline-block;
+            background-color: rgba(78, 84, 200, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .apps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-icon {
+                font-size: 10rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-buttons {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-description {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .category-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-icon {
+                font-size: 8rem;
+            }
+            
+            .app-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-fingerprint logo-icon"></i>
+                    <span class="logo-text">DID身份门户</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link">首页</a></li>
+                    <li><a href="#" class="nav-link">特性</a></li>
+                    <li><a href="#" class="nav-link active">应用</a></li>
+                </ul>
+                
+                <div class="nav-buttons">
+                    <a href="#" class="btn btn-outline btn-small">登录</a>
+                    <a href="#" class="btn btn-primary btn-small">注册</a>
+                </div>
+                
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">基于区块链的去中心化身份系统</h1>
+                    <p class="hero-description">
+                        安全、可信、自主控制的数字身份解决方案。通过区块链技术，实现身份数据的去中心化存储和验证，保护用户隐私，简化身份验证流程。
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary">立即开始</a>
+                        <a href="#" class="btn btn-outline" style="color: white; border-color: white;">登录账户</a>
+                    </div>
+                </div>
+                <div class="hero-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 应用展示区域 -->
+    <section class="section apps-section">
+        <div class="container">
+            <h2 class="section-title">DID应用生态系统</h2>
+            <p class="section-subtitle">
+                基于区块链DID身份系统，我们为不同行业提供了丰富的应用场景，实现数据可信、流程透明、安全高效。
+            </p>
+            
+            <!-- 智能制造 -->
+            <div class="app-category">
+                <h3 class="category-title">智能制造</h3>
+                <p class="category-description">
+                    利用DID技术实现工业设备身份认证、数据上链和智能合约自动化，推动工业4.0和绿色制造发展。
+                </p>
+                
+                <div class="apps-grid">
+                    <!-- 设备监控 -->
+                    <div class="app-card">
+                        <div class="app-icon">🏭</div>
+                        <h4 class="app-title">设备监控</h4>
+                        <p class="app-description">实时监控设备运行状态，数据上链确保不可篡改，提高生产透明度和效率。</p>
+                        <span class="app-tag">工业4.0</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 碳足迹协同上链 -->
+                    <div class="app-card">
+                        <div class="app-icon">🌱</div>
+                        <h4 class="app-title">碳足迹协同上链</h4>
+                        <p class="app-description">企业碳足迹数据区块链协同，实现碳排放数据的透明、可追溯管理。</p>
+                        <span class="app-tag">绿色制造</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 设备采购与结算 -->
+                    <div class="app-card">
+                        <div class="app-icon">🤝</div>
+                        <h4 class="app-title">设备采购与结算</h4>
+                        <p class="app-description">智能合约设备采购与自动结算，降低交易成本，提高供应链效率。</p>
+                        <span class="app-tag">供应链金融</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 智慧农业 -->
+            <div class="app-category">
+                <h3 class="category-title">智慧农业</h3>
+                <p class="category-description">
+                    DID技术赋能现代农业，实现农产品溯源、农业保险智能化和农田碳汇管理，保障食品安全和农业可持续发展。
+                </p>
+                
+                <div class="apps-grid">
+                    <!-- 农产品溯源 -->
+                    <div class="app-card">
+                        <div class="app-icon">🍎</div>
+                        <h4 class="app-title">农产品溯源</h4>
+                        <p class="app-description">农田到餐桌全链路溯源，确保食品安全，提升消费者信任度。</p>
+                        <span class="app-tag">食品安全</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 农业保险服务 -->
+                    <div class="app-card">
+                        <div class="app-icon">🛡️</div>
+                        <h4 class="app-title">农业保险服务</h4>
+                        <p class="app-description">基于物联网的智能农业保险，自动触发理赔，降低农业风险。</p>
+                        <span class="app-tag">农业金融</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 物联网远程控制 -->
+                    <div class="app-card">
+                        <div class="app-icon">📡</div>
+                        <h4 class="app-title">物联网远程控制</h4>
+                        <p class="app-description">农田环境远程监控，智能调节灌溉、施肥，提高农业生产效率。</p>
+                        <span class="app-tag">智能农业</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 农田碳汇管理 -->
+                    <div class="app-card">
+                        <div class="app-icon">🌳</div>
+                        <h4 class="app-title">农田碳汇管理</h4>
+                        <p class="app-description">农田固碳量核算上链，生成可交易碳汇资产，助力碳中和目标。</p>
+                        <span class="app-tag">碳交易</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商店运营 -->
+            <div class="app-category">
+                <h3 class="category-title">商店运营</h3>
+                <p class="category-description">
+                    DID技术赋能零售行业，实现商品信息上链、主播身份认证和库存数据共享，提升消费者信任和运营效率。
+                </p>
+                
+                <div class="apps-grid">
+                    <!-- 商品上链管理 -->
+                    <div class="app-card">
+                        <div class="app-icon">🏷️</div>
+                        <h4 class="app-title">商品上链管理</h4>
+                        <p class="app-description">商品信息区块链存证，确保商品来源真实，防止假冒伪劣。</p>
+                        <span class="app-tag">商品溯源</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 短视频直播带货 -->
+                    <div class="app-card">
+                        <div class="app-icon">🎥</div>
+                        <h4 class="app-title">短视频直播带货</h4>
+                        <p class="app-description">DID认证主播带货，确保主播身份真实可信，提升消费者购买信心。</p>
+                        <span class="app-tag">数字营销</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 智能库存预警 -->
+                    <div class="app-card">
+                        <div class="app-icon">📊</div>
+                        <h4 class="app-title">智能库存预警</h4>
+                        <p class="app-description">区块链库存数据共享，实现供应链协同，自动预警库存不足。</p>
+                        <span class="app-tag">供应链优化</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数字金融 -->
+            <div class="app-category">
+                <h3 class="category-title">数字金融</h3>
+                <p class="category-description">
+                    DID技术重塑金融服务，实现保险智能赔付、供应链资产融资和AI风控，降低金融风险，提高服务效率。
+                </p>
+                
+                <div class="apps-grid">
+                    <!-- 企业保险服务 -->
+                    <div class="app-card">
+                        <div class="app-icon">💼</div>
+                        <h4 class="app-title">企业保险服务</h4>
+                        <p class="app-description">定制化保险智能赔付，基于智能合约自动执行，提高理赔效率。</p>
+                        <span class="app-tag">企业金融</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 供应链资产融资 -->
+                    <div class="app-card">
+                        <div class="app-icon">🔗</div>
+                        <h4 class="app-title">供应链资产融资</h4>
+                        <p class="app-description">供应链资产上链融资，实现资产数字化，提高资金周转效率。</p>
+                        <span class="app-tag">供应链金融</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 智能风险控制 -->
+                    <div class="app-card">
+                        <div class="app-icon">⚖️</div>
+                        <h4 class="app-title">智能风险控制</h4>
+                        <p class="app-description">多维数据AI风控，结合区块链数据，提高风险评估准确性。</p>
+                        <span class="app-tag">风险管理</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 政府服务 -->
+            <div class="app-category">
+                <h3 class="category-title">政府服务</h3>
+                <p class="category-description">
+                    DID技术赋能政务服务，实现政策补贴透明发放、公共资源公平分配和环保数据可信监管，提升政府治理能力。
+                </p>
+                
+                <div class="apps-grid">
+                    <!-- 政策补贴发放 -->
+                    <div class="app-card">
+                        <div class="app-icon">🏛️</div>
+                        <h4 class="app-title">政策补贴发放</h4>
+                        <p class="app-description">补贴资金上链透明发放，确保资金流向可追溯，防止滥用和腐败。</p>
+                        <span class="app-tag">政务服务</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 公共资源管理 -->
+                    <div class="app-card">
+                        <div class="app-icon">🌐</div>
+                        <h4 class="app-title">公共资源管理</h4>
+                        <p class="app-description">公共资源分配上链管理，确保分配过程公平透明，提高资源利用效率。</p>
+                        <span class="app-tag">公共管理</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 双碳数据分析 -->
+                    <div class="app-card">
+                        <div class="app-icon">📈</div>
+                        <h4 class="app-title">双碳数据分析</h4>
+                        <p class="app-description">区域碳排数据上链分析，为环保监管和碳交易提供可信数据支持。</p>
+                        <span class="app-tag">环保监管</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 个人会员 -->
+            <div class="app-category">
+                <h3 class="category-title">个人会员</h3>
+                <p class="category-description">
+                    DID技术赋能个人数字生活，实现数字资产管理、通证积分兑换和便民服务办理，提升个人数字生活体验。
+                </p>
+                
+                <div class="apps-grid">
+                    <!-- 数字钱包管理 -->
+                    <div class="app-card">
+                        <div class="app-icon">👛</div>
+                        <h4 class="app-title">数字钱包管理</h4>
+                        <p class="app-description">个人数字资产管理，安全存储和交易数字资产，保护个人财产隐私。</p>
+                        <span class="app-tag">资产管理</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 通证积分商城 -->
+                    <div class="app-card">
+                        <div class="app-icon">🏪</div>
+                        <h4 class="app-title">通证积分商城</h4>
+                        <p class="app-description">通证积分兑换商品服务，激励用户参与生态建设，提升用户粘性。</p>
+                        <span class="app-tag">会员权益</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 便民服务办理 -->
+                    <div class="app-card">
+                        <div class="app-icon">✅</div>
+                        <h4 class="app-title">便民服务办理</h4>
+                        <p class="app-description">生活缴费政务服务办理，一站式解决日常生活需求，提高生活便利性。</p>
+                        <span class="app-tag">生活服务</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                    
+                    <!-- 个人信用管理 -->
+                    <div class="app-card">
+                        <div class="app-icon">📋</div>
+                        <h4 class="app-title">个人信用管理</h4>
+                        <p class="app-description">区块链个人信用记录，构建可信个人信用体系，助力金融服务获取。</p>
+                        <span class="app-tag">信用服务</span>
+                        <a href="#" class="btn btn-outline btn-small">使用邮箱+密码登录</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 简单的JavaScript交互 -->
+    <script>
+        // 移动端汉堡菜单切换
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            const navButtons = document.querySelector('.nav-buttons');
+            
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+                navButtons.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navButtons.style.display = 'flex';
+                
+                // 移动端样式调整
+                if (window.innerWidth <= 768) {
+                    navLinks.style.flexDirection = 'column';
+                    navLinks.style.position = 'absolute';
+                    navLinks.style.top = '100%';
+                    navLinks.style.left = '0';
+                    navLinks.style.width = '100%';
+                    navLinks.style.backgroundColor = 'white';
+                    navLinks.style.padding = '1.5rem';
+                    navLinks.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                    
+                    navButtons.style.flexDirection = 'column';
+                    navButtons.style.position = 'absolute';
+                    navButtons.style.top = 'calc(100% + 180px)';
+                    navButtons.style.left = '0';
+                    navButtons.style.width = '100%';
+                    navButtons.style.backgroundColor = 'white';
+                    navButtons.style.padding = '1.5rem';
+                    navButtons.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                }
+            }
+        });
+        
+        // 窗口大小变化时重置导航
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const navLinks = document.querySelector('.nav-links');
+                const navButtons = document.querySelector('.nav-buttons');
+                
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'row';
+                navLinks.style.position = 'static';
+                navLinks.style.width = 'auto';
+                navLinks.style.backgroundColor = 'transparent';
+                navLinks.style.padding = '0';
+                navLinks.style.boxShadow = 'none';
+                
+                navButtons.style.display = 'flex';
+                navButtons.style.flexDirection = 'row';
+                navButtons.style.position = 'static';
+                navButtons.style.width = 'auto';
+                navButtons.style.backgroundColor = 'transparent';
+                navButtons.style.padding = '0';
+                navButtons.style.boxShadow = 'none';
+            }
+        });
+        
+        // 卡片悬停效果增强
+        document.querySelectorAll('.app-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+                this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.15)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
+            });
+        });
+        
+        // 导航链接点击效果
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 移除所有active类
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // 为当前点击的链接添加active类
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+        
